@@ -42,10 +42,10 @@ npm run lint
 
 ## Begin
 
-### 创建 Vue 3 应用
+### 初始化 vue-rabbit 应用
 
 ```sh
-npm init vue@latest
+$ npm init vue@latest
 
 Need to install the following packages:
   create-vue@3.7.1
@@ -77,7 +77,7 @@ Done. Now run:
 
 ```
 
-## 别名路径联想设置
+### 别名路径联想设置
 
 `@/` 自动联想到 `src` 目录。
 
@@ -92,6 +92,56 @@ Done. Now run:
     }
   }
 }
+
+```
+
+### 按需导入 `element-plus`
+
+```sh
+# 安装 element-plus
+# NPM
+$ npm install element-plus --save
+
+# Yarn
+$ yarn add element-plus
+```
+
+```sh
+# 安装 unplugin-vue-components 和 unplugin-auto-import 两款插件
+$ npm install -D unplugin-vue-components unplugin-auto-import
+```
+
+```js
+// vite.config.ts
+import { fileURLToPath, URL } from 'node:url'
+
+import { defineConfig } from 'vite'
+
+// 按需导入 element-plus
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+
+import vue from '@vitejs/plugin-vue'
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [
+    vue(),
+    // 配置插件
+    AutoImport({
+      resolvers: [ElementPlusResolver()],
+    }),
+    Components({
+      resolvers: [ElementPlusResolver()],
+    }),
+  ],
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
+  },
+})
 
 ```
 

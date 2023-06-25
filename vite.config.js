@@ -13,6 +13,7 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   plugins: [
     vue(),
+    // 配置插件
     AutoImport({
       resolvers: [ElementPlusResolver()],
     }),
