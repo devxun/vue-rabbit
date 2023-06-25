@@ -98,7 +98,7 @@ Done. Now run:
 ### 按需导入 `element-plus`
 
 ```sh
-# 安装 element-plus
+# 安装 `element-plus`
 # NPM
 $ npm install element-plus --save
 
@@ -107,7 +107,7 @@ $ yarn add element-plus
 ```
 
 ```sh
-# 安装 unplugin-vue-components 和 unplugin-auto-import 两款插件
+# 安装 `unplugin-vue-components` 和 `unplugin-auto-import` 两款插件
 $ npm install -D unplugin-vue-components unplugin-auto-import
 ```
 
@@ -148,7 +148,7 @@ export default defineConfig({
 ### 使用 `sass` 方案定制 `element-plus` 主题色
 
 ```sh
-# 安装 sass
+# 安装 `sass`
 npm i sass -D
 ```
 
@@ -223,6 +223,43 @@ export default defineConfig({
     },
   },
 })
+
+```
+
+### 配置 `axios`
+
+```sh
+# 安装 `axios`
+```
+
+```js
+// utils/http.js
+// 配置 axios
+import axios from 'axios'
+
+// 创建 axios 实例
+const http = axios.create({
+  baseURL: 'https://some-domain.com/api/',
+  timeout: 5000,
+})
+
+// axios 请求拦截器
+http.instance.interceptors.request.use(
+  (config) => {
+    return config
+  },
+  (error) => Promise.reject(error)
+)
+
+// axios 响应式拦截器
+http.instance.interceptors.response.use(
+  (response) => response.data,
+  (error) => {
+    return Promise.reject(error)
+  }
+)
+
+export default http
 
 ```
 
