@@ -77,3 +77,21 @@ Done. Now run:
 
 ```
 
+## 别名路径联想设置
+
+`@/` 自动联想到 `src` 目录。
+
+在 `jsconfig.json` 中添加如下配置：
+
+```json
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  }
+}
+
+```
+
