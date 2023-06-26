@@ -3,12 +3,12 @@ import axios from 'axios'
 
 // 创建 axios 实例
 const http = axios.create({
-  baseURL: 'http://pcapi-xiaotuxian-front-devtest.itheima.net',
+  baseURL: 'http://127.0.0.1:4523/m1/2929028-0-default',
   timeout: 5000,
 })
 
 // axios 请求拦截器
-http.instance.interceptors.request.use(
+http.interceptors.request.use(
   (config) => {
     return config
   },
@@ -16,7 +16,7 @@ http.instance.interceptors.request.use(
 )
 
 // axios 响应式拦截器
-http.instance.interceptors.response.use(
+http.interceptors.response.use(
   (response) => response.data,
   (error) => {
     return Promise.reject(error)
