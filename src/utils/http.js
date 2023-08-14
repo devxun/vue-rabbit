@@ -3,7 +3,8 @@ import axios from 'axios'
 
 // 创建 axios 实例
 const http = axios.create({
-  baseURL: 'http://127.0.0.1:4523/m1/2929028-0-default',
+  // baseURL: 'http://127.0.0.1:4523/m1/2929028-0-default',
+  baseURL: 'https://pcapi-xiaotuxian-front-devtest.itheima.net',
   timeout: 5000,
 })
 
