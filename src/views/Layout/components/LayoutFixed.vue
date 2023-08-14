@@ -2,6 +2,10 @@
 // vueUse
 import { useScroll } from '@vueuse/core'
 const { y } = useScroll(window)
+
+// 使用 pinia 中的数据
+import { useCategoryStore } from '@/stores/category'
+const categoryStore = useCategoryStore()
 </script>
 
 <template>
@@ -10,7 +14,10 @@ const { y } = useScroll(window)
       <RouterLink class="logo" to="/" />
       <!-- 导航区域 -->
       <ul class="app-header-nav">
-        <li class="home">
+        <li class="home" v-for="item in categoryStore.categoryList" :key="item.id">
+          <RouterLink to="/">{{ item.name }}</RouterLink>
+        </li>
+        <!-- <li class="home">
           <RouterLink to="/">首页</RouterLink>
         </li>
         <li>
@@ -39,7 +46,7 @@ const { y } = useScroll(window)
         </li>
         <li>
           <RouterLink to="/">杂项</RouterLink>
-        </li>
+        </li> -->
       </ul>
 
       <div class="right">
@@ -53,7 +60,7 @@ const { y } = useScroll(window)
 <style scoped lang="scss">
 .app-header-sticky {
   width: 100%;
-  height: 85px;
+  height: 80px;
   position: fixed;
   left: 0;
   top: 0;
