@@ -1,4 +1,5 @@
-import './assets/main.css'
+// 会引起主页布局结构偏移
+// import './assets/main.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
