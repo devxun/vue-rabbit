@@ -11,3 +11,7 @@ export const getNewAPI = () => {
     url: '/home/new',
   })
 }
+
+export const getHotAPI = () => {
+  return http('/home/hot')
+}
