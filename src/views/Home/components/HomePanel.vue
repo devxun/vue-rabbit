@@ -25,7 +25,7 @@ defineProps({
       </div>
       <!-- 主体内容区域 -->
       <!-- 插槽 -->
-      <slot />
+      <slot name="main" />
     </div>
   </div>
 </template>

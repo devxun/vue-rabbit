@@ -5,3 +5,9 @@ export function getBannerAPI() {
     url: 'home/banner',
   })
 }
+
+export const getNewAPI = () => {
+  return http({
+    url: '/home/new',
+  })
+}
