@@ -15,3 +15,7 @@ export const getNewAPI = () => {
 export const getHotAPI = () => {
   return http('/home/hot')
 }
+
+export const getGoodsAPI = () => {
+  return http('/home/goods')
+}
