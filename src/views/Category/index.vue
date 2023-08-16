@@ -1,35 +1,13 @@
 <script setup>
 import GoodsItem from '../Home/components/GoodsItem.vue'
-import { getTopCategoryAPI } from '@/apis/category'
-import { ref } from 'vue'
-import { useRoute, onBeforeRouteUpdate } from 'vue-router'
-const categoryData = ref({})
-const route = useRoute()
-const getCategory = async (id = route.params.id) => {
-  // 如何在 setup 中获取路由参数
-  // useRoute() -> route 等价于 this.$route
-  const res = await getTopCategoryAPI(id)
-  categoryData.value = res.result
-}
 
-getCategory()
+// 获取分类
+import { useCategory } from './composables/useCategory'
+const { categoryData } = useCategory()
 
-// 方案二：使用 onBeforeRouteUpdate 钩子函数，做精确更新
-onBeforeRouteUpdate((to) => {
-  // 存在问题：参数滞后现象，应该使用最新的路由参数请求最新的分类数据
-  getCategory(to.params.id)
-})
-
-import { getBannerAPI } from '@/apis/home'
-
-const bannerList = ref([])
-
-const getBanner = async () => {
-  const res = await getBannerAPI({ distributionSite: '2' })
-  bannerList.value = res.result
-}
-
-getBanner()
+// 获取 banner
+import { useBanner } from './composables/useBanner'
+const { bannerList } = useBanner()
 </script>
 
 <template>
