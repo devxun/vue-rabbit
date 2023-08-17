@@ -14,6 +14,7 @@ const rules = {
     { required: true, message: '密码不能为空' },
     { min: 6, max: 24, message: '密码长度要求6-14个字符' },
   ],
+  // 自定义校验规则
   agree: [
     {
       validator: (rule, val, callback) => {
@@ -21,6 +22,16 @@ const rules = {
       },
     },
   ],
+}
+
+// 通过 ref 获取 form 实例做统一校验
+const formRef = ref(null)
+const doLogin = () => {
+  // 调用实例方法
+  formRef.value.validate(async (valid) => {
+    // valid: 所有表单都通过校验才为true
+    console.log(valid)
+  })
 }
 </script>
 
@@ -55,7 +66,7 @@ const rules = {
               <el-form-item prop="agree" label-width="22px">
                 <el-checkbox v-model="userInfo.agree" size="large"> 我已同意隐私条款和服务条款 </el-checkbox>
               </el-form-item>
-              <el-button size="large" class="subBtn">点击登录</el-button>
+              <el-button size="large" class="subBtn" @click="doLogin">点击登录</el-button>
             </el-form>
           </div>
         </div>
