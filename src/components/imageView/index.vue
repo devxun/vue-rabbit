@@ -12,7 +12,55 @@ import { ref } from 'vue'
 
 // 实现鼠标移入交互
 const curIndex = ref(0)
-const mouseEnterFn = (i) => (curIndex.value = i)
+const enterhandler = (i) => (curIndex.value = i)
+
+import { watch } from 'vue'
+import { useMouseInElement } from '@vueuse/core'
+
+// 2. 获取鼠标相对位置
+const target = ref(null)
+const { elementX, elementY, isOutside } = useMouseInElement(target)
+
+// 3. 控制滑块跟随鼠标移动（监听 elementX/Y 变化，一旦变化，重新设置left/top）
+const left = ref(0)
+const top = ref(0)
+
+const positionX = ref(0)
+const positionY = ref(0)
+
+watch([elementX, elementY, isOutside], () => {
+  // 如果鼠标没有移入到盒子里面 直接不执行后面的逻辑
+  if (isOutside.value) return
+
+  // 有效范围内控制滑块距离
+  // 横向
+  if (elementX.value > 100 && elementX.value < 300) {
+    left.value = elementX.value - 100
+  }
+  // 纵向
+  if (elementY.value > 100 && elementY.value < 300) {
+    top.value = elementY.value - 100
+  }
+
+  // 处理边界
+  if (elementX.value > 300) {
+    left.value = 200
+  }
+  if (elementX.value < 100) {
+    left.value = 0
+  }
+
+  if (elementY.value > 300) {
+    top.value = 200
+  }
+  if (elementY.value < 100) {
+    top.value = 0
+  }
+
+  // 控制大图的显示
+  positionX.value = -left.value * 2
+  positionY.value = -top.value * 2
+})
 </script>
 
 <template>
@@ -21,11 +69,11 @@ const mouseEnterFn = (i) => (curIndex.value = i)
     <div class="middle" ref="target">
       <img :src="imageList[curIndex]" alt="" />
       <!-- 蒙层小滑块 -->
-      <div class="layer" :style="{ left: `0px`, top: `0px` }"></div>
+      <div class="layer" v-show="!isOutside" :style="{ left: `${left}px`, top: `${top}px` }"></div>
     </div>
     <!-- 小图列表 -->
     <ul class="small">
-      <li v-for="(img, i) in imageList" :key="i" @mouseenter="mouseEnterFn(i)" :class="{ active: i === curIndex }">
+      <li v-for="(img, i) in imageList" :key="i" @mouseenter="enterhandler(i)" :class="{ active: i === curIndex }">
         <img :src="img" alt="" />
       </li>
     </ul>
@@ -35,11 +83,11 @@ const mouseEnterFn = (i) => (curIndex.value = i)
       :style="[
         {
           backgroundImage: `url(${imageList[0]})`,
-          backgroundPositionX: `0px`,
-          backgroundPositionY: `0px`,
+          backgroundPositionX: `${positionX}px`,
+          backgroundPositionY: `${positionY}px`,
         },
       ]"
-      v-show="false"
+      v-show="!isOutside"
     ></div>
   </div>
 </template>
@@ -66,7 +114,7 @@ const mouseEnterFn = (i) => (curIndex.value = i)
     z-index: 500;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     background-repeat: no-repeat;
-    // 背景图:盒子的大小 = 2:1  将来控制背景图的移动来实现放大的效果查看 background-position
+    // 背景图：盒子的大小 = 2:1，将来控制背景图的移动来实现放大的效果查看 background-position
     background-size: 800px 800px;
     background-color: #f8f8f8;
   }
