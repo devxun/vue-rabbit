@@ -13,6 +13,11 @@ getGoods()
 
 import GoodsHot from './components/GoodsHot.vue'
 import ImageView from '@/components/imageView/index.vue'
+import XtxSku from '@/components/XtxSku/index.vue'
+
+const skuChange = () => {
+  console.log(1)
+}
 </script>
 
 <template>
@@ -88,7 +93,7 @@ import ImageView from '@/components/imageView/index.vue'
                 </dl>
               </div>
               <!-- sku组件 -->
-
+              <XtxSku :goods="goods" @change="skuChange" />
               <!-- 数据组件 -->
 
               <!-- 按钮组件 -->
