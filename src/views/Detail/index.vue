@@ -12,8 +12,9 @@ const getGoods = async () => {
 getGoods()
 
 import GoodsHot from './components/GoodsHot.vue'
-import ImageView from '@/components/imageView/index.vue'
-import XtxSku from '@/components/XtxSku/index.vue'
+// 因为全局注册，所以不需要再局部引入
+// import ImageView from '@/components/ImageView/index.vue'
+// import XtxSku from '@/components/XtxSku/index.vue'
 
 const skuChange = () => {
   console.log(1)
