@@ -119,9 +119,9 @@ import GoodsHot from './components/GoodsHot.vue'
             <!-- 24热榜+专题推荐 -->
             <div class="goods-aside">
               <!-- 24小时热榜 -->
-              <GoodsHot />
+              <GoodsHot :type="1" />
               <!-- 周热榜 -->
-              <GoodsHot />
+              <GoodsHot :type="2" />
             </div>
           </div>
         </div>
