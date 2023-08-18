@@ -1,6 +1,9 @@
 // 配置 axios
 import axios from 'axios'
 
+import { ElMessage } from 'element-plus'
+import 'element-plus/theme-chalk/el-message.css'
+
 // 创建 axios 实例
 const http = axios.create({
   // baseURL: 'http://127.0.0.1:4523/m1/2929028-0-default',
@@ -20,6 +23,7 @@ http.interceptors.request.use(
 http.interceptors.response.use(
   (response) => response.data,
   (error) => {
+    ElMessage({ type: 'warning', message: error.response.data.message })
     return Promise.reject(error)
   }
 )
