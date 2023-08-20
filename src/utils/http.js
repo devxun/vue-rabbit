@@ -1,4 +1,5 @@
 // 配置 axios
+import { useUserStore } from '@/stores/user'
 import axios from 'axios'
 
 import { ElMessage } from 'element-plus'
@@ -14,6 +15,12 @@ const http = axios.create({
 // axios 请求拦截器
 http.interceptors.request.use(
   (config) => {
+    const userStore = useUserStore()
+    const token = userStore.userInfo.token
+    if (token) {
+      // 由后端规定
+      config.headers.Authorization = `Bearer ${token}`
+    }
     return config
   },
   (error) => Promise.reject(error)
