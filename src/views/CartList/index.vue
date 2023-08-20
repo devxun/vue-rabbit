@@ -1,6 +1,13 @@
 <script setup>
 import { useCartStore } from '@/stores/cart.js'
 const cartStore = useCartStore()
+
+// 单选回调
+const singleCheck = (i, selected) => {
+  // 单选框切换时修改 store 中对应的状态
+  // 为什么要传回 i，因为要筛选出修改的项
+  cartStore.singleCheck(i.skuId, selected)
+}
 </script>
 
 <template>
@@ -24,7 +31,8 @@ const cartStore = useCartStore()
           <tbody>
             <tr v-for="i in cartStore.cartList" :key="i.id">
               <td>
-                <el-checkbox />
+                <!-- 先传一个默认参数 selected，再传一个方法可以携带的额外参数 i -->
+                <el-checkbox :model-value="i.selected" @change="(selected) => singleCheck(i, selected)" />
               </td>
               <td>
                 <div class="goods">

@@ -35,12 +35,19 @@ export const useCartStore = defineStore(
     // 2. 总价 coutn * price
     const allCount = computed(() => cartList.value.reduce((a, c) => a + c.count, 0))
     const allPrice = computed(() => cartList.value.reduce((a, c) => a + c.count * c.price, 0))
+    // 单选功能
+    const singleCheck = (skuId, selected) => {
+      // 通过 skuId 筛选要修改的项
+      const item = cartList.value.find((item) => item.skuId === skuId)
+      item.selected = selected
+    }
     return {
       cartList,
       addCart,
       delCart,
       allCount,
       allPrice,
+      singleCheck,
     }
   },
   {
