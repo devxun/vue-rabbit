@@ -23,9 +23,17 @@ export const useCartStore = defineStore(
         cartList.value.push(goods)
       }
     }
+    const delCart = (skuId) => {
+      // 思路1：找到要删除项的下标值 - splice
+      // const idx = cartList.value.findIndex((item) => item.skuId === skuId)
+      // cartList.value.splice(idx, 1)
+      // 思路2：数组过滤 - filter
+      cartList.value = cartList.value.filter((item) => item.skuId !== skuId)
+    }
     return {
       cartList,
       addCart,
+      delCart,
     }
   },
   {
