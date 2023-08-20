@@ -2,6 +2,8 @@
 // 使用 pinia 中的数据
 import { useCategoryStore } from '@/stores/category'
 const categoryStore = useCategoryStore()
+
+import CartHeader from './CartHeader.vue'
 </script>
 
 <template>
@@ -20,6 +22,7 @@ const categoryStore = useCategoryStore()
         <input type="text" placeholder="搜一搜" />
       </div>
       <!-- 头部购物车 -->
+      <CartHeader />
     </div>
   </header>
 </template>
