@@ -5,6 +5,8 @@ import axios from 'axios'
 import { ElMessage } from 'element-plus'
 import 'element-plus/theme-chalk/el-message.css'
 
+import router from '@/router'
+
 // 创建 axios 实例
 const http = axios.create({
   // baseURL: 'http://127.0.0.1:4523/m1/2929028-0-default',
@@ -30,7 +32,15 @@ http.interceptors.request.use(
 http.interceptors.response.use(
   (response) => response.data,
   (error) => {
+    const userStore = useUserStore()
     ElMessage({ type: 'warning', message: error.response.data.message })
+    // 401 token 失效处理
+    // 1. 清除本地用户数据
+    // 2. 跳转到登录页
+    if (error.response.status === 401) {
+      userStore.clearUserInfo()
+      router.push('/login')
+    }
     return Promise.reject(error)
   }
 )
