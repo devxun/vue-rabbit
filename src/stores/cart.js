@@ -82,6 +82,10 @@ export const useCartStore = defineStore(
     const selectedCount = computed(() => cartList.value.filter((item) => item.selected).reduce((a, c) => a + c.count, 0))
     // 总价
     const selectedPrice = computed(() => cartList.value.filter((item) => item.selected).reduce((a, c) => a + c.count * c.price, 0))
+
+    // 清除购物车
+    const clearCartList = () => (cartList.value = [])
+
     return {
       cartList,
       addCart,
@@ -93,6 +97,7 @@ export const useCartStore = defineStore(
       selectedPrice,
       allCheck,
       isAll,
+      clearCartList,
     }
   },
   {
