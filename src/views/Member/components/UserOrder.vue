@@ -40,7 +40,29 @@ const pageChange = (page) => {
   getOrderList()
 }
 
-onMounted(() => getOrderList())
+onMounted(() => {
+  getOrderList()
+})
+
+import { useCountDown } from '@/composables/useCountDown.js'
+const { formatTime, start } = useCountDown()
+
+onMounted(() => {
+  console.log()
+})
+
+// 创建格式化函数
+const formatPayState = (payState) => {
+  const stateMap = {
+    1: '待付款',
+    2: '待发货',
+    3: '待收货',
+    4: '待评价',
+    5: '已完成',
+    6: '已取消',
+  }
+  return stateMap[payState]
+}
 </script>
 
 <template>
@@ -62,7 +84,7 @@ onMounted(() => getOrderList())
               <!-- 未付款，倒计时时间还有 -->
               <span class="down-time" v-if="order.orderState === 1">
                 <i class="iconfont icon-down-time"></i>
-                <b>付款截止: {{ order.countdown }}</b>
+                <b>付款截止: {{ start(order.countdown) ? '' : formatTime }}</b>
               </span>
             </div>
             <div class="body">
@@ -86,7 +108,8 @@ onMounted(() => getOrderList())
                 </ul>
               </div>
               <div class="column state">
-                <p>{{ order.orderState }}</p>
+                <!-- 调用函数适配显示 -->
+                <p>{{ formatPayState(order.orderState) }}</p>
                 <p v-if="order.orderState === 3">
                   <a href="javascript:;" class="green">查看物流</a>
                 </p>
