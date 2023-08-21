@@ -218,3 +218,4 @@ const allCheck = (selected) => {
   }
 }
 </style>
+@/stores/cartStore.js

@@ -218,3 +218,4 @@ const cartStore = useCartStore()
   }
 }
 </style>
+@/stores/cartStore.js

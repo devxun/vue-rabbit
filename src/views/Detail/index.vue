@@ -406,3 +406,4 @@ const addCart = () => {
   padding: 25px 0;
 }
 </style>
+@/stores/cartStore.js

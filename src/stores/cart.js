@@ -4,13 +4,18 @@ import { defineStore } from 'pinia'
 import { computed, ref } from 'vue'
 
 import { useUserStore } from './user'
-import { findNewCartListAPI, insertCartAPI } from '@/apis/cart'
+import { findNewCartListAPI, insertCartAPI, delCartAPI } from '@/apis/cart'
 
 export const useCartStore = defineStore(
   'cart',
   () => {
     const userStore = useUserStore()
     const isLogin = computed(() => userStore.userInfo.token)
+
+    const updateNewCartList = async () => {
+      const res = await findNewCartListAPI()
+      cartList.value = res.result
+    }
 
     // 1. 定义 state - cartList
     const cartList = ref([])
@@ -20,8 +25,7 @@ export const useCartStore = defineStore(
       if (isLogin.value) {
         // 登录之后的加入购车逻辑
         await insertCartAPI({ skuId, count })
-        const res = await findNewCartListAPI()
-        cartList.value = res.result
+        updateNewCartList()
       } else {
         // 本地逻辑
 
@@ -39,12 +43,17 @@ export const useCartStore = defineStore(
         }
       }
     }
-    const delCart = (skuId) => {
-      // 思路1：找到要删除项的下标值 - splice
-      // const idx = cartList.value.findIndex((item) => item.skuId === skuId)
-      // cartList.value.splice(idx, 1)
-      // 思路2：数组过滤 - filter
-      cartList.value = cartList.value.filter((item) => item.skuId !== skuId)
+    const delCart = async (skuId) => {
+      if (isLogin.value) {
+        await delCartAPI([skuId])
+        updateNewCartList()
+      } else {
+        // 思路1：找到要删除项的下标值 - splice
+        // const idx = cartList.value.findIndex((item) => item.skuId === skuId)
+        // cartList.value.splice(idx, 1)
+        // 思路2：数组过滤 - filter
+        cartList.value = cartList.value.filter((item) => item.skuId !== skuId)
+      }
     }
 
     // 全选功能 action
