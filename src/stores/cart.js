@@ -30,6 +30,7 @@ export const useCartStore = defineStore(
       // 思路2：数组过滤 - filter
       cartList.value = cartList.value.filter((item) => item.skuId !== skuId)
     }
+
     // 计算属性
     // 1. 总的数量 count 之和
     // 2. 总价 coutn * price
@@ -41,6 +42,12 @@ export const useCartStore = defineStore(
       const item = cartList.value.find((item) => item.skuId === skuId)
       item.selected = selected
     }
+
+    // 已选择
+    // 数量
+    const selectedCount = computed(() => cartList.value.filter((item) => item.selected).reduce((a, c) => a + c.count, 0))
+    // 总价
+    const selectedPrice = computed(() => cartList.value.filter((item) => item.selected).reduce((a, c) => a + c.count * c.price, 0))
     return {
       cartList,
       addCart,
@@ -48,6 +55,8 @@ export const useCartStore = defineStore(
       allCount,
       allPrice,
       singleCheck,
+      selectedCount,
+      selectedPrice,
     }
   },
   {
