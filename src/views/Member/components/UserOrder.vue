@@ -33,6 +33,13 @@ const getOrderList = async () => {
   orderList.value = res.result.items
   total.value = res.result.counts
 }
+
+// 页数切换
+const pageChange = (page) => {
+  params.value.page = page
+  getOrderList()
+}
+
 onMounted(() => getOrderList())
 </script>
 
@@ -111,7 +118,7 @@ onMounted(() => getOrderList())
           </div>
           <!-- 分页 -->
           <div class="pagination-container">
-            <el-pagination background layout="prev, pager, next" />
+            <el-pagination :total="total" @current-change="pageChange" :page-size="params.pageSize" background layout="prev, pager, next" />
           </div>
         </div>
       </div>
