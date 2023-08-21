@@ -10,6 +10,12 @@ const tabTypes = [
   { name: 'cancel', label: '已取消' },
 ]
 
+// tab 切换
+const tabChange = (type) => {
+  params.value.orderState = type
+  getOrderList()
+}
+
 // 订单列表
 import { getUserOrder } from '@/apis/order'
 import { onMounted, ref } from 'vue'
@@ -32,8 +38,8 @@ onMounted(() => getOrderList())
 
 <template>
   <div class="order-container">
-    <el-tabs>
-      <!-- tab切换 -->
+    <el-tabs @tab-change="tabChange">
+      <!-- tab 切换 -->
       <el-tab-pane v-for="item in tabTypes" :key="item.name" :label="item.label" />
 
       <div class="main-container">
