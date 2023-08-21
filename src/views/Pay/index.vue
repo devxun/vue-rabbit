@@ -14,8 +14,10 @@ onMounted(() => getPayInfo())
 // 跳转地址
 // 携带订单 id 以及回跳地址跳转到支付地址（get）
 // 支付地址
+// 账号：askgxl8276@sandbox.com
+// 密码：111111
 const baseURL = 'http://pcapi-xiaotuxian-front-devtest.itheima.net/'
-const backURL = 'http://127.0.0.1:5173/paycallback'
+const backURL = 'http://localhost:5173/paycallback'
 const redirectUrl = encodeURIComponent(backURL)
 const payUrl = `${baseURL}pay/aliPay?orderId=${route.query.id}&redirect=${redirectUrl}`
 </script>
